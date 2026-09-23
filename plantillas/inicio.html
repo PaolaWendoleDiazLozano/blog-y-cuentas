@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+{%for publicacion in publicaciones %}
+<div class="post-engry">
+<h2><a href="{{ publiacion.get_absolute_url }}">{{ publicacion.titulo }}</a></h2>
+<p>Autor: <strong>{{ publicacion.autor }}</strong></p>
+<p>{{ publicacion.contenido }}</p>
+</div>
+{% endfor %}
+{% endblock contenido %}
