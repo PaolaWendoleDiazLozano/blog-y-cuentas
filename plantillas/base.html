@@ -1,19 +1,45 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog en Django</title>
+    <link rel="icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
 </head>
 <body>
     <header> 
-        <h1> <a href="{%url 'inicio' %}"> Blog en Django</a></h1>
+        <a href="{% url 'inicio' %}" class="marca">
+            <img src="{% static 'img/logo.svg' %}" alt="Logo" width="36" height="36">
+            Blog en Django
+        </a>
+        {% comment %}
+        <div class="nav-right">
+            <a href="{% url 'nueva_publicacion' %}">+ Nueva Publicación en el Blog</a>
+        </div>
+        {% endcomment %}
     </header>
-    <div>
+
+    <main>
+        {% comment %}
+        {% if user.is_authenticated %}
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                Hola {{ user.username }}
+                <button type="submit">Salir</button>
+            </form>
+        {% else %}
+            <p>No ha ingresado, <a href="{% url 'login' %}">acceder</a> | <a href="{% url 'signup' %}">Registrarse</a></p>
+        {% endif %}
+        {% endcomment %}
+
         {% block contenido %}
         {% endblock contenido %}
-    </div>
+    </main>
+
+    <footer>
+        <p>© 2026 Blog en Django ·Instituto Tecnologico de la Laguna</p>
+    </footer>
 </body>
 </html>

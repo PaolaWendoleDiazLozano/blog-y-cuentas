@@ -2,7 +2,15 @@
 
 {% block contenido %}
 <div class="post-entry">
-    <h2>{{ publicacion.titulo}}</h2>
-    <p>{{ publicacion.contenido}}</p>
+    <h2>{{ publicacion.titulo }}</h2>
+    <p>{{ publicacion.contenido }}</p>
 </div>
+
+{% comment %}
+<a href="{% url 'edicion_publicacion' publicacion.pk %}">Editar Publicacion del Blog</a> |
+<a href="{% url 'eliminar_publicacion' publicacion.pk %}">Eliminar Publicacion del Blog</a>
+{% endcomment %}
+
+<hr>
+<a href="{% url 'inicio' %}">← Volver al inicio</a>
 {% endblock contenido %}
