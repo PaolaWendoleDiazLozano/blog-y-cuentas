@@ -38,6 +38,8 @@ class PruebasBlog(TestCase):
         self.assertEqual(respuesta.status_code, 200)
         self.assertEqual(sin_respuesta.status_code, 404)
         self.assertContains(respuesta, 'Un buen titulo')
+        self.assertContains(respuesta, 'Volver al inicio')
+        self.assertContains(respuesta, reverse('inicio'))
         self.assertTemplateUsed(respuesta, 'detalle_publicacion.html')
 
     # Descomenta estas pruebas cuando agregues las vistas y URLs de crear, editar y eliminar:
