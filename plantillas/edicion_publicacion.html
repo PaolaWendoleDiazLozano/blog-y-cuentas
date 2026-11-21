@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 
 {% block contenido %}
-<h1> Edicion Publicacion</h1>
-<form action="" method="post">{% csrf_token %}
-  {{ form }}
-  <input type="submit" value="Editar">
+<h1>Editar publicación</h1>
+<form action="" method="post" class="formulario">{% csrf_token %}
+    {{ form }}
+    <button type="submit" class="boton">Actualizar</button>
+    <a href="{{ publicacion.get_absolute_url }}">Cancelar</a>
 </form>
 {% endblock contenido %}

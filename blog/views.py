@@ -13,8 +13,9 @@
     #publicacion})
 
 from django.views.generic import ListView, DetailView
-#from django.views.generic.edit import CreateView, UpdateView, DeleteView
-#from django.urls import reverse_lazy
+# --- Práctica 6 (Tema 2.11: Formularios) ---
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 from .models import Publicacion
 
 
@@ -28,25 +29,23 @@ class VistaDetalleBlog(DetailView):
     model = Publicacion
     template_name = 'detalle_publicacion.html'
 
-
-#class VistaCreacionBlog(CreateView):
-  #  model = Publicacion
-   # template_name = 'nueva_publicacion.html'
-   # fields = ['titulo', 'autor', 'contenido']
-   # success_url = reverse_lazy('inicio')  # Redirige tras crear con éxito
-
-
-#class VistaEdicionBlog(UpdateView):
-   # model = Publicacion
-   ## template_name = 'edicion_publicacion.html'
-   # fields = ['titulo', 'contenido']
-   # success_url = reverse_lazy('inicio')  # Redirige tras editar con éxito
+# --- Práctica 6 (Tema 2.11: Formularios CRUD) ---
+class VistaCreacionBlog(CreateView):
+    model = Publicacion
+    template_name = 'nueva_publicacion.html'
+    fields = ['titulo', 'autor', 'contenido']
 
 
-#class VistaEliminarBlog(DeleteView):
-  ##  model = Publicacion
-   # template_name = 'eliminar_publicacion.html'
-   # success_url = reverse_lazy('inicio')
+class VistaEdicionBlog(UpdateView):
+    model = Publicacion
+    template_name = 'edicion_publicacion.html'
+    fields = ['titulo', 'contenido']
+
+
+class VistaEliminarBlog(DeleteView):
+    model = Publicacion
+    template_name = 'eliminar_publicacion.html'
+    success_url = reverse_lazy('inicio')
 
    #ListView
    #MultipleObjectTemplateResponseMixin
@@ -55,5 +54,3 @@ class VistaDetalleBlog(DetailView):
    #MultipleObjectMixin
    #ConextMixin
    #View
-
-

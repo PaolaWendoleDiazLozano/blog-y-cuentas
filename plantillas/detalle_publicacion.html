@@ -6,10 +6,11 @@
     <p>{{ publicacion.contenido }}</p>
 </div>
 
-{% comment %}
-<a href="{% url 'edicion_publicacion' publicacion.pk %}">Editar Publicacion del Blog</a> |
-<a href="{% url 'eliminar_publicacion' publicacion.pk %}">Eliminar Publicacion del Blog</a>
-{% endcomment %}
+{# --- Práctica 6 (Tema 2.11: Formularios) --- #}
+<p class="acciones">
+    <a href="{% url 'edicion_publicacion' publicacion.pk %}">Editar Publicacion del Blog</a>
+    <a href="{% url 'eliminar_publicacion' publicacion.pk %}">Eliminar Publicacion del Blog</a>
+</p>
 
 <hr>
 <a href="{% url 'inicio' %}">← Volver al inicio</a>

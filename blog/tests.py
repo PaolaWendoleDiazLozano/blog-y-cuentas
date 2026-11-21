@@ -19,6 +19,7 @@ class PruebasBlog(TestCase):
             autor=cls.user,
         )
 
+    # --- Práctica 5 (Tema 2.10: Listado y Detalle) ---
     def test_modelo_publicacion(self):
         self.assertEqual(self.publicacion.titulo, 'Un buen titulo')
         self.assertEqual(self.publicacion.contenido, 'Excelente contenido')
@@ -42,34 +43,34 @@ class PruebasBlog(TestCase):
         self.assertContains(respuesta, reverse('inicio'))
         self.assertTemplateUsed(respuesta, 'detalle_publicacion.html')
 
-    # Descomenta estas pruebas cuando agregues las vistas y URLs de crear, editar y eliminar:
-    # def test_vista_creacion_publicacion(self):
-    #     respuesta = self.client.post(
-    #         reverse('nueva_publicacion'),
-    #         {
-    #             'titulo': 'Nuevo titulo',
-    #             'contenido': 'Nuevo texto',
-    #             'autor': self.user.id,
-    #         }
-    #     )
-    #     self.assertEqual(respuesta.status_code, 302)
-    #     self.assertEqual(Publicacion.objects.last().titulo, 'Nuevo titulo')
-    #     self.assertEqual(Publicacion.objects.last().contenido, 'Nuevo texto')
+    # --- Práctica 6 (Tema 2.11: Formularios CRUD) ---
+    def test_vista_creacion_publicacion(self):
+        respuesta = self.client.post(
+            reverse('nueva_publicacion'),
+            {
+                'titulo': 'Nuevo titulo',
+                'contenido': 'Nuevo texto',
+                'autor': self.user.id,
+            }
+        )
+        self.assertEqual(respuesta.status_code, 302)
+        self.assertEqual(Publicacion.objects.last().titulo, 'Nuevo titulo')
+        self.assertEqual(Publicacion.objects.last().contenido, 'Nuevo texto')
 
-    # def test_vista_edicion_publicacion(self):
-    #     respuesta = self.client.post(
-    #         reverse('edicion_publicacion', args='1'),
-    #         {
-    #             'titulo': 'Titulo actualizado',
-    #             'contenido': 'Texto actualizado',
-    #         },
-    #     )
-    #     self.assertEqual(respuesta.status_code, 302)
-    #     self.assertEqual(Publicacion.objects.last().titulo, 'Titulo actualizado')
-    #     self.assertEqual(Publicacion.objects.last().contenido, 'Texto actualizado')
+    def test_vista_edicion_publicacion(self):
+        respuesta = self.client.post(
+            reverse('edicion_publicacion', args='1'),
+            {
+                'titulo': 'Titulo actualizado',
+                'contenido': 'Texto actualizado',
+            },
+        )
+        self.assertEqual(respuesta.status_code, 302)
+        self.assertEqual(Publicacion.objects.last().titulo, 'Titulo actualizado')
+        self.assertEqual(Publicacion.objects.last().contenido, 'Texto actualizado')
 
-    # def test_vista_eliminar_publicacion(self):
-    #     respuesta = self.client.post(
-    #         reverse('eliminar_publicacion', args='1')
-    #     )
-    #     self.assertEqual(respuesta.status_code, 302)
+    def test_vista_eliminar_publicacion(self):
+        respuesta = self.client.post(
+            reverse('eliminar_publicacion', args='1')
+        )
+        self.assertEqual(respuesta.status_code, 302)
