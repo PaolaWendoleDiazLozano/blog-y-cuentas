@@ -1,6 +1,16 @@
-{{% extends 'base.html' %}
+{% extends 'base.html' %}
 
 {% block contenido %}
+    {% if user.is_authenticated %}
+        <div class="post-entry">
+            <p>¡Hola, <strong>{{ user.username }}</strong>! <a href="{% url 'nueva_publicacion' %}">+ Escribir una publicación nueva</a></p>
+        </div>
+    {% else %}
+        <div class="post-entry">
+            <p>¿Aún no tienes cuenta? <a href="{% url 'signup' %}">Regístrate aquí</a> para publicar tus propias entradas.</p>
+        </div>
+    {% endif %}
+
     {% for publicacion in publicaciones %}
         <div class="post-entry">
             <h2><a href="{{ publicacion.get_absolute_url }}">{{ publicacion.titulo }}</a></h2>

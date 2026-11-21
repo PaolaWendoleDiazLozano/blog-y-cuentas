@@ -7,10 +7,12 @@
 </div>
 
 {# --- Práctica 6 (Tema 2.11: Formularios) --- #}
+{% if user == publicacion.autor %}
 <p class="acciones">
     <a href="{% url 'edicion_publicacion' publicacion.pk %}">Editar Publicacion del Blog</a>
     <a href="{% url 'eliminar_publicacion' publicacion.pk %}">Eliminar Publicacion del Blog</a>
 </p>
+{% endif %}
 
 <hr>
 <a href="{% url 'inicio' %}">← Volver al inicio</a>

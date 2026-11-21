@@ -97,3 +97,11 @@ class PruebasBlog(TestCase):
         respuesta = self.client.get(reverse('signup'))
         self.assertEqual(respuesta.status_code, 200)
         self.assertTemplateUsed(respuesta, 'registration/signup.html')
+
+      #---reto prac7---
+    def test_publicacion_eliminar_sin_sesion(self):
+        url = reverse('eliminar_publicacion', args=[self.publicacion.pk])
+        respuesta = self.client.post(url)
+        self.assertEqual(respuesta.status_code, 302)
+        self.assertRedirects(respuesta, f"{reverse('login')}?next={url}")
+        self.assertTrue(Publicacion.objects.filter(pk=self.publicacion.pk).exists())
