@@ -98,10 +98,29 @@ class PruebasBlog(TestCase):
         self.assertEqual(respuesta.status_code, 200)
         self.assertTemplateUsed(respuesta, 'registration/signup.html')
 
-      #---reto prac7---
+     #---reto prac7---
     def test_publicacion_eliminar_sin_sesion(self):
         url = reverse('eliminar_publicacion', args=[self.publicacion.pk])
         respuesta = self.client.post(url)
         self.assertEqual(respuesta.status_code, 302)
         self.assertRedirects(respuesta, f"{reverse('login')}?next={url}")
         self.assertTrue(Publicacion.objects.filter(pk=self.publicacion.pk).exists())
+
+    def test_editar_sin_sesion_redirige(self):
+        url = reverse('edicion_publicacion', args=[self.publicacion.pk])
+        respuesta = self.client.get(url)
+        self.assertEqual(respuesta.status_code, 302)
+        self.assertRedirects(respuesta, f"{reverse('login')}?next={url}")
+
+    def test_registro_usuario_post_e_inicio_automatico(self):
+        respuesta = self.client.post(
+            reverse('signup'),
+            {
+                'username': 'usuario_nuevo_test',
+                'password1': 'ClaveSegura123!',
+                'password2': 'ClaveSegura123!',
+            }
+        )
+        self.assertEqual(respuesta.status_code, 302)
+        self.assertTrue(get_user_model().objects.filter(username='usuario_nuevo_test').exists())
+        self.assertIn('_auth_user_id', self.client.session)

@@ -23,7 +23,7 @@ class PruebasRegistro(TestCase):
                 "password2": "Clave-segura-2026",
             },
         )
-        self.assertRedirects(respuesta, reverse("login"))
+        self.assertRedirects(respuesta, reverse("inicio"))
         self.assertEqual(get_user_model().objects.count(), 1)
         self.assertEqual(get_user_model().objects.first().username, "nuevousuario")
 

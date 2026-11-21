@@ -16,8 +16,8 @@
         </a>
         {# --- Práctica 6 y Práctica 7 (Navegación y Autenticación) --- #}
         <nav>
-            <a href="{% url 'nueva_publicacion' %}">+ Nueva Publicación en el Blog</a>
             {% if user.is_authenticated %}
+                <a href="{% url 'nueva_publicacion' %}">+ Nueva Publicación en el Blog</a>
                 <span>Hola {{ user.username }}</span>
                 <form action="{% url 'logout' %}" method="post">
                     {% csrf_token %}
