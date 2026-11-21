@@ -74,3 +74,11 @@ class PruebasBlog(TestCase):
             reverse('eliminar_publicacion', args='1')
         )
         self.assertEqual(respuesta.status_code, 302)
+
+    def test_vista_eliminar_publicacion_get(self):
+        respuesta = self.client.get(
+            reverse('eliminar_publicacion', args='1')
+        )
+        self.assertEqual(respuesta.status_code, 200)
+        self.assertTemplateUsed(respuesta, 'eliminar_publicacion.html')
+        self.assertTrue(Publicacion.objects.filter(pk=self.publicacion.pk).exists())

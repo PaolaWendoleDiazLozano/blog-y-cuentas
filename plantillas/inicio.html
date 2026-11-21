@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{{% extends 'base.html' %}
 
 {% block contenido %}
     {% for publicacion in publicaciones %}
@@ -6,6 +6,9 @@
             <h2><a href="{{ publicacion.get_absolute_url }}">{{ publicacion.titulo }}</a></h2>
             <p>Autor: <strong>{{ publicacion.autor }}</strong></p>
             <p>{{ publicacion.contenido|truncatewords:30 }}</p>
+            <p class="acciones">
+                <a href="{% url 'edicion_publicacion' publicacion.pk %}">Editar</a>
+            </p>
         </div>
     {% empty %}
         <p>Todavía no hay publicaciones.</p>
