@@ -2,8 +2,28 @@
 
 {% block contenido %}
 <h1>Nueva Publicacion</h1>
-<form action="" method="post" class="formulario">{% csrf_token %}
-    {{ form }}
+<form action="" method="post" class="formulario" novalidate>{% csrf_token %}
+    <div>
+        {{ form.titulo.label_tag }}
+        {{ form.titulo }}
+        {% if form.titulo.help_text %}
+            <small>{{ form.titulo.help_text }}</small>
+        {% endif %}
+        {{ form.titulo.errors }}
+    </div>
+
+    <div>
+        {{ form.autor.label_tag }}
+        {{ form.autor }}
+        {{ form.autor.errors }}
+    </div>
+
+    <div>
+        {{ form.contenido.label_tag }}
+        {{ form.contenido }}
+        {{ form.contenido.errors }}
+    </div>
+
     <input type="submit" value="Guardar" class="boton">
 </form>
 {% endblock contenido %}
