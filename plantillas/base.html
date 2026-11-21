@@ -14,31 +14,29 @@
             <img src="{% static 'img/logo.svg' %}" alt="Logo" width="36" height="36">
             Blog en Django
         </a>
-        {# --- Práctica 6 (Tema 2.11: Formularios) --- #}
+        {# --- Práctica 6 y Práctica 7 (Navegación y Autenticación) --- #}
         <nav>
             <a href="{% url 'nueva_publicacion' %}">+ Nueva Publicación en el Blog</a>
+            {% if user.is_authenticated %}
+                <span>Hola {{ user.username }}</span>
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="enlace">Salir</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Acceder</a>
+                <a href="{% url 'signup' %}">Registrarse</a>
+            {% endif %}
         </nav>
     </header>
 
     <main>
-        {% comment %}
-        {% if user.is_authenticated %}
-            <form action="{% url 'logout' %}" method="post">
-                {% csrf_token %}
-                Hola {{ user.username }}
-                <button type="submit">Salir</button>
-            </form>
-        {% else %}
-            <p>No ha ingresado, <a href="{% url 'login' %}">acceder</a> | <a href="{% url 'signup' %}">Registrarse</a></p>
-        {% endif %}
-        {% endcomment %}
-
         {% block contenido %}
         {% endblock contenido %}
     </main>
 
     <footer>
-        <p>© 2026 Blog en Django · Paola Wendole Díaz Lozano ·Instituto Tecnologico de la Laguna</p>
+        <p>© 2026 Blog en Django · Paola Wendole Díaz Lozano · Instituto Tecnológico de la Laguna</p>
     </footer>
 </body>
 </html>

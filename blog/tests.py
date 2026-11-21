@@ -43,21 +43,23 @@ class PruebasBlog(TestCase):
         self.assertContains(respuesta, reverse('inicio'))
         self.assertTemplateUsed(respuesta, 'detalle_publicacion.html')
 
-    # --- Práctica 6 (Tema 2.11: Formularios CRUD) ---
+    # --- Práctica 6 (Tema 2.11: Formularios CRUD) + Práctica 7 (Requiere sesión) ---
     def test_vista_creacion_publicacion(self):
+        self.client.login(username='usuarioprueba', password='secreto')  # Práctica 7
         respuesta = self.client.post(
             reverse('nueva_publicacion'),
             {
                 'titulo': 'Nuevo titulo',
                 'contenido': 'Nuevo texto',
-                'autor': self.user.id,
             }
         )
         self.assertEqual(respuesta.status_code, 302)
         self.assertEqual(Publicacion.objects.last().titulo, 'Nuevo titulo')
         self.assertEqual(Publicacion.objects.last().contenido, 'Nuevo texto')
+        self.assertEqual(Publicacion.objects.last().autor, self.user)  # Práctica 7: autor automático
 
     def test_vista_edicion_publicacion(self):
+        self.client.login(username='usuarioprueba', password='secreto')  # Práctica 7
         respuesta = self.client.post(
             reverse('edicion_publicacion', args='1'),
             {
@@ -70,15 +72,28 @@ class PruebasBlog(TestCase):
         self.assertEqual(Publicacion.objects.last().contenido, 'Texto actualizado')
 
     def test_vista_eliminar_publicacion(self):
+        self.client.login(username='usuarioprueba', password='secreto')  # Práctica 7
         respuesta = self.client.post(
             reverse('eliminar_publicacion', args='1')
         )
         self.assertEqual(respuesta.status_code, 302)
 
     def test_vista_eliminar_publicacion_get(self):
+        self.client.login(username='usuarioprueba', password='secreto')  # Práctica 7
         respuesta = self.client.get(
             reverse('eliminar_publicacion', args='1')
         )
         self.assertEqual(respuesta.status_code, 200)
         self.assertTemplateUsed(respuesta, 'eliminar_publicacion.html')
         self.assertTrue(Publicacion.objects.filter(pk=self.publicacion.pk).exists())
+
+    # --- Práctica 7 (Tema 2.12: Cuentas de usuario y protección de rutas) ---
+    def test_redirige_sin_sesion(self):
+        respuesta = self.client.get(reverse('nueva_publicacion'))
+        self.assertEqual(respuesta.status_code, 302)
+        self.assertRedirects(respuesta, f"{reverse('login')}?next={reverse('nueva_publicacion')}")
+
+    def test_vista_registro(self):
+        respuesta = self.client.get(reverse('signup'))
+        self.assertEqual(respuesta.status_code, 200)
+        self.assertTemplateUsed(respuesta, 'registration/signup.html')
